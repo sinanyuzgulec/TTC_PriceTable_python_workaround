@@ -76,11 +76,25 @@ def setup_logger(log_file: Path) -> logging.Logger:
     return logger
 
 
+def print_disclaimer():
+    """Display mandatory legal & service disclaimer before execution."""
+    cprint("┌──────────────────────────────────────────────────────────────┐", Colors.YELLOW)
+    cprint("│                      LEGAL DISCLAIMER                        │", Colors.YELLOW, bold=True)
+    cprint("├──────────────────────────────────────────────────────────────┤", Colors.YELLOW)
+    cprint("│ • Unofficial community tool for The Elder Scrolls Online.    │", Colors.YELLOW)
+    cprint("│ • Not affiliated with ZeniMax Online Studios or TTC Gaming.  │", Colors.YELLOW)
+    cprint("│ • Not responsible for any issues arising on or related to    │", Colors.YELLOW)
+    cprint("│   https://eu.tamrieltradecentre.com/pc/Trade/WebClient       │", Colors.YELLOW)
+    cprint("│ • Strictly downloads zip data & extracts ONLY .lua tables.   │", Colors.YELLOW)
+    cprint("└──────────────────────────────────────────────────────────────┘", Colors.YELLOW)
+
+
 def print_banner():
     cprint("╔══════════════════════════════════════════════════════════════╗", Colors.CYAN)
     cprint("║       Tamriel Trade Centre - Price Table Auto-Sync           ║", Colors.CYAN, bold=True)
     cprint("║      Cross-Platform Automated Price Table Updater for ESO    ║", Colors.CYAN)
     cprint("╚══════════════════════════════════════════════════════════════╝", Colors.CYAN)
+    print_disclaimer()
 
 
 def show_status(config: Config):
