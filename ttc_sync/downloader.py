@@ -79,6 +79,10 @@ def extract_zip_safely(zip_data: bytes, target_dir: Path, log_fn: Optional[Calla
 
     target_dir.mkdir(parents=True, exist_ok=True)
 
+    # Verify zip magic bytes (starts with PK\x03\x04 or PK\x05\x06)
+    if not (zip_data.startswith(b"PK\x03\x04") or zip_data.startswith(b"PK\x05\x06")):
+        raise DownloadError("Downloaded file is not a valid zip archive (invalid magic bytes). Only ZIP files are allowed.")
+
     try:
         zf = zipfile.ZipFile(io.BytesIO(zip_data))
     except zipfile.BadZipFile as e:
@@ -89,18 +93,23 @@ def extract_zip_safely(zip_data: bytes, target_dir: Path, log_fn: Optional[Calla
         raise DownloadError("Zip archive is empty!")
 
     # Verify that expected lua files are in the archive
-    has_lua = any(f.endswith(".lua") for f in file_list)
+    has_lua = any(f.lower().endswith(".lua") for f in file_list)
     if not has_lua:
         raise DownloadError(f"Zip archive does not contain expected .lua files: {file_list}")
 
     extracted_files = []
-    log(f"Extracting {len(file_list)} files into {target_dir}...")
+    blocked_files = []
 
-    # Write each file using atomic replacement (write to temp file in same directory, then rename)
+    # Strict whitelist: ONLY .lua files are permitted to be extracted!
+    # Any other extension (e.g. .exe, .dll, .bat, .sh, .bin) is strictly blocked.
     for filename in file_list:
-        # Prevent directory traversal attacks
         safe_name = os.path.basename(filename)
         if not safe_name:
+            continue
+
+        # Security check: only allow .lua files
+        if not safe_name.lower().endswith(".lua"):
+            blocked_files.append(safe_name)
             continue
 
         dest_path = target_dir / safe_name
@@ -117,7 +126,10 @@ def extract_zip_safely(zip_data: bytes, target_dir: Path, log_fn: Optional[Calla
 
         extracted_files.append(safe_name)
 
-    log(f"Successfully extracted: {', '.join(extracted_files)}")
+    if blocked_files:
+        log(f"[Security] Blocked non-lua files from archive: {', '.join(blocked_files)}")
+
+    log(f"Successfully extracted {len(extracted_files)} Lua files: {', '.join(extracted_files)}")
     return extracted_files
 
 

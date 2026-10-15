@@ -66,11 +66,39 @@ class TestDownloader(unittest.TestCase):
             self.assertTrue((target_dir / "PriceTableEU.lua").is_file())
             self.assertEqual((target_dir / "PriceTableEU.lua").read_text(), 'PriceTable = { ["test"] = 100 }')
 
+    def test_extract_zip_blocks_non_lua_files(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            target_dir = Path(tmpdir) / "TamrielTradeCentre"
+
+            bio = io.BytesIO()
+            with zipfile.ZipFile(bio, "w", zipfile.ZIP_DEFLATED) as zf:
+                zf.writestr("PriceTableEU.lua", 'PriceTable = {}')
+                zf.writestr("malicious.exe", 'binary data')
+                zf.writestr("script.sh", '#!/bin/sh\nrm -rf /')
+                zf.writestr("config.json", '{"key": "value"}')
+
+            zip_bytes = bio.getvalue()
+            extracted = extract_zip_safely(zip_bytes, target_dir)
+
+            self.assertIn("PriceTableEU.lua", extracted)
+            self.assertNotIn("malicious.exe", extracted)
+            self.assertNotIn("script.sh", extracted)
+            self.assertNotIn("config.json", extracted)
+
+            # Assert only lua exists on disk
+            self.assertTrue((target_dir / "PriceTableEU.lua").exists())
+            self.assertFalse((target_dir / "malicious.exe").exists())
+            self.assertFalse((target_dir / "script.sh").exists())
+            self.assertFalse((target_dir / "config.json").exists())
+
     def test_extract_empty_or_invalid_zip(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             target_dir = Path(tmpdir)
             with self.assertRaises(DownloadError):
                 extract_zip_safely(b"not a zip file", target_dir)
+
+            with self.assertRaises(DownloadError):
+                extract_zip_safely(b"<html>404 Not Found</html>", target_dir)
 
 
 if __name__ == "__main__":

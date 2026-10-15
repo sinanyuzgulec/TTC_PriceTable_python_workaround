@@ -25,6 +25,7 @@ Designed especially for **Linux (Proton / Steam Deck / Flatpak / Lutris)** and *
   - **Daemon mode**: Optional built-in loop mode (`--daemon`) for containers, screen, or tmux.
 - **Zero Third-Party Dependencies**: Built exclusively with Python standard library (`urllib`, `zipfile`, `pathlib`, `subprocess`). No `pip install` required!
 - **Safe & Atomic Extraction**: Uses safe temporary-file extraction to prevent game crashes or file corruption if ESO is running during update.
+- **Strict Security & Lua Whitelisting**: Validates ZIP magic bytes upon download and strictly extracts ONLY `.lua` data files. Any foreign, executable (`.exe`, `.dll`), script (`.bat`, `.sh`), or non-lua files are automatically blocked.
 - **Megaserver Selection**: Supports **EU**, **NA**, or **Both** megaservers.
 - **Detailed Status & History**: View file timestamps, age in hours, sync status, and scheduler state at a glance.
 - **100% Free & Open Source**: MIT Licensed.
@@ -169,6 +170,10 @@ Linux (Proton / Steam Deck), macOS (Apple Silicon & Intel) ve Windows üzerinde 
    python3 main.py --uninstall-service
    ```
 
+> **Yasal Uyarı & Sorumluluk Reddi:**
+> - Bu depo ve geliştiricileri, [https://eu.tamrieltradecentre.com/pc/Trade/WebClient](https://eu.tamrieltradecentre.com/pc/Trade/WebClient) (TTC WebClient) tarafında veya TTC'nin resmi servislerinde meydana gelebilecek aksaklıklardan, veri uyuşmazlıklarından ya da hesap durumlarından **kesinlikle sorumlu değildir**.
+> - **Güvenlik Koruması:** Bu araç yalnızca geçerli ZIP arşivlerini indirir ve içerisinden **yalnızca `.lua` uzantılı veri dosyalarını** çıkarır. ZIP içinde yer alabilecek `.exe`, `.bat`, `.sh` veya yabancı hiçbir dosya asla sisteme çıkarılmaz, otomatik olarak engellenir.
+
 ---
 
 ## 🙏 Respect & Attribution to Tamriel Trade Centre (TTC)
@@ -190,6 +195,8 @@ We extend our deep gratitude, highest respect, and credit to the creators, devel
 
 ### Legal Disclaimers
 - *Tamriel Trade Centre was created using content and materials from The Elder Scrolls® Online: Tamriel Unlimited™ © ZeniMax® Online Studios, LLC or its licensors. This site and this project are not affiliated with ZeniMax Online Studios, and ZeniMax Online Studios is not responsible for any of the content on, or the privacy policy of this site.*
+- **TTC WebClient & Service Disclaimer:** *This repository and its maintainers are strictly NOT responsible for any issues, outages, data discrepancies, account-related actions, or errors that may occur on or in connection with the Tamriel Trade Centre WebClient ([https://eu.tamrieltradecentre.com/pc/Trade/WebClient](https://eu.tamrieltradecentre.com/pc/Trade/WebClient)) or official TTC services. This tool only downloads publicly available price table zip archives and extracts local `.lua` tables.*
+- **Security & Strict Whitelisting:** *For user safety, this tool exclusively accepts ZIP archives and strictly extracts ONLY `.lua` files (`PriceTable*.lua`, `ItemLookUpTable_*.lua`). Any non-lua files, executables, scripts, or foreign extensions inside archives are blocked automatically.*
 - *Windows®, Xbox® and their logos are registered trademarks of Microsoft Corporation.*
 - *Sony PlayStation® and its logo are registered trademarks of Sony Inc.*
 
