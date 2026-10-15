@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ttc-pricetable-sync"
+version = "1.0.0"
+description = "Cross-platform automated Tamriel Trade Centre (TTC) Price Table updater for Elder Scrolls Online (Linux / Windows / macOS / Steam Deck)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "arcsinan" }
+]
+keywords = [
+    "eso",
+    "elder-scrolls-online",
+    "tamriel-trade-centre",
+    "ttc",
+    "addon",
+    "linux",
+    "steamdeck",
+    "proton",
+    "windows",
+    "macos"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Games/Entertainment",
+    "Topic :: Utilities"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/arcsinan/TTC_PriceTable_python_workaround"
+"TTC Official Website" = "https://tamrieltradecentre.com"
+"ESOUI Addon" = "https://www.esoui.com/downloads/info1245-TamrielTradeCentre.html"
+
+[project.scripts]
+ttc-sync = "ttc_sync.cli:main"

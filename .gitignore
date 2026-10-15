@@ -1,0 +1,35 @@
+# Python byte code
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+ttc_sync.log
+
+# Local user configs
+ttc_config.json
+
+# Temporary files
+.tmp_*
+*.tmp
+
+# Packaging / Distribution
+dist/
+build/
+*.egg-info/
+
+# Environments
+.venv/
+venv/
+env/
+
+# IDE configs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
