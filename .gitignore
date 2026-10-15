@@ -1,35 +1,64 @@
-# Python byte code
+# Python byte code & cache
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Logs
+# Logs & user execution history
 *.log
+**/*.log
 ttc_sync.log
+*.log.*
+*.out
+*.err
 
-# Local user configs
+# Local user configs & private data
 ttc_config.json
+config.json
+*.local.json
+.ttc*
+.env
+.env.*
 
-# Temporary files
+# ESO local data & price tables (prevent accidental commits of downloaded game data)
+*.lua
+*.manifest
+SavedVariables/
+
+# Downloaded archives
+*.zip
+*.tar.gz
+*.tgz
+
+# Temporary files & swap
 .tmp_*
 *.tmp
+*.bak
+*~
+*.swp
+*.swo
 
 # Packaging / Distribution
 dist/
 build/
 *.egg-info/
 
-# Environments
+# Virtual Environments
 .venv/
 venv/
 env/
+ENV/
 
-# IDE configs
+# IDE & Editor configs
 .idea/
 .vscode/
-*.swp
-*.swo
+*.sublime-project
+*.sublime-workspace
 
-# OS files
+# OS-specific files
 .DS_Store
 Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
