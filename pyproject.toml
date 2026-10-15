@@ -41,7 +41,7 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/your-username/TTC_PriceTable_python_workaround"
+"Homepage" = "https://github.com/sinanyuzgulec/TTC_PriceTable_python_workaround"
 "TTC Official Website" = "https://tamrieltradecentre.com"
 "ESOUI Addon" = "https://www.esoui.com/downloads/info1245-TamrielTradeCentre.html"
 

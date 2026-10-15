@@ -38,7 +38,7 @@ Designed especially for **Linux (Proton / Steam Deck / Flatpak / Lutris)** and *
 
 ### 1. Clone or Download the Repository
 ```bash
-git clone https://github.com/your-username/TTC_PriceTable_python_workaround.git
+git clone https://github.com/sinanyuzgulec/TTC_PriceTable_python_workaround.git
 cd TTC_PriceTable_python_workaround
 ```
 
