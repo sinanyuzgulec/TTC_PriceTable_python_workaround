@@ -83,12 +83,17 @@ StandardOutput=journal
 StandardError=journal
 """
 
+    if 24 % interval_hours == 0:
+        calendar_spec = f"*-*-* 00/{interval_hours}:00:00"
+    else:
+        calendar_spec = f"*-*-* 00/12:00:00"
+
     timer_content = f"""[Unit]
 Description=Tamriel Trade Centre Price Table Timer (Runs every {interval_hours} hours)
 
 [Timer]
 OnBootSec=2min
-OnUnitActiveSec={interval_hours}h
+OnCalendar={calendar_spec}
 Persistent=true
 
 [Install]
@@ -101,6 +106,7 @@ WantedBy=timers.target
 
         subprocess.run(["systemctl", "--user", "daemon-reload"], check=True)
         subprocess.run(["systemctl", "--user", "enable", "--now", f"{SERVICE_NAME}.timer"], check=True)
+        subprocess.run(["systemctl", "--user", "restart", f"{SERVICE_NAME}.timer"], check=True)
         return True, f"Successfully installed and started systemd user timer '{SERVICE_NAME}.timer' (runs every {interval_hours}h)."
     except Exception as e:
         return False, f"Failed to install systemd timer: {e}"
